@@ -1,0 +1,6 @@
+brash
+*.o
+*.swp
+*~
+.vscode/
+.DS_Store
