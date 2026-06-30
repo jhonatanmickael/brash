@@ -2,7 +2,7 @@
  * @file        main.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Main loop and command execution logic
- * @date        2026-06-28
+ * @date        2026-06-30
  * @note        Architecture Note: For now, all logic resides in main.c for simplicity 
  * during the initial development phase. As the project evolves, this 
  * code will be refactored into a modular structure, with specific 
@@ -13,11 +13,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CMD_SIZE 80
+#define CMD_SIZE 1024
 #define CLEAR "\033[H\033[J"
 #define RESET   "\033[0m"
 #define BOLD    "\033[1m"
 #define GREEN   "\033[32m"
+
+void clear_buffer(){
+    int i;
+    while((i = getchar()) != '\n' && i != EOF);
+}
 
 int read_input(char *var, int size){
     fflush(stdout);
@@ -27,8 +32,7 @@ int read_input(char *var, int size){
             return 0;
         }
         else {
-            int i;
-            while((i = getchar()) != '\n' && i != EOF);
+            clear_buffer();
             fprintf(stderr, "brash: erro: Limite de caracteres estourado\n");
             return 1;
         }
