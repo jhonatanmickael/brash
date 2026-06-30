@@ -23,14 +23,21 @@ Development is in its early stages. This is an incremental implementation where 
 * **Architecture:** Unix/Posix
 
 
-##  Project Structure
+## Project Structure
+
+The project is organized to separate business logic from configurations and ensure efficient compilation:
+
 ```text
 brash/
-├── src/          # Main source code
-├── include/      # Header files
-├── Makefile      # Build automation
-├── .gitignore    # Version control exclusions
-└── README.md     # Documentation
+├── include/
+│   └── brash.h          # Contracts, definitions, and prototypes
+├── src/
+│   ├── main.c           # Main logic and execution loop
+│   └── io.c             # Input and output management
+├── Makefile             # Build automation
+├── .gitignore           # Version control exclusions
+├── LICENSE              # Project license
+└── README.md            # Project documentation
 ```
 
 ## How to Compile

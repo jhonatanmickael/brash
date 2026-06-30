@@ -3,45 +3,9 @@
  * @author      Jhonatan Mickael
  * @brief       Brash - Main loop and command execution logic
  * @date        2026-06-30
- * @note        Architecture Note: For now, all logic resides in main.c for simplicity 
- * during the initial development phase. As the project evolves, this 
- * code will be refactored into a modular structure, with specific 
- * functions separated into their own header and source files.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define CMD_SIZE 1024
-#define CLEAR "\033[H\033[J"
-#define RESET   "\033[0m"
-#define BOLD    "\033[1m"
-#define GREEN   "\033[32m"
-
-void clear_buffer(){
-    int i;
-    while((i = getchar()) != '\n' && i != EOF);
-}
-
-int read_input(char *var, int size){
-    fflush(stdout);
-    if(fgets(var, size, stdin)){
-        if(strchr(var, '\n') != NULL){
-            var[strcspn(var, "\n")] = '\0';
-            return 0;
-        }
-        else {
-            clear_buffer();
-            return 1;
-        }
-    }
-    else{
-        if(feof(stdin)) return 2;
-        else if(ferror(stdin)) return 3;
-        return 4;
-    }
-}
+#include "brash.h"
 
 int main(){
     printf(CLEAR);
