@@ -37,12 +37,9 @@ int read_input(char *var, int size){
         }
     }
     else{
-        if(feof(stdin)) {
-            return 2;
-        }
-        else if(ferror(stdin)) {
-            return 3;
-        }
+        if(feof(stdin)) return 2;
+        else if(ferror(stdin)) return 3;
+        return 4;
     }
 }
 
@@ -72,8 +69,11 @@ int main(){
             case 3:
                 fprintf(stderr, "brash: erro: Falha na leitura\n");
                 break;
+            default:
+                fprintf(stderr, "brash: erro: estado de entrada inesperado (%d)\n", status_command);
+                break;
         } 
     }
-    
+
     return 0;
 }
