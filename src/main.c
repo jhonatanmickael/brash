@@ -33,13 +33,16 @@ int read_input(char *var, int size){
         }
         else {
             clear_buffer();
-            fprintf(stderr, "brash: erro: Limite de caracteres estourado\n");
             return 1;
         }
     }
     else{
-        fprintf(stderr, "brash: erro: Falha na leitura\n");
-        return 1;
+        if(feof(stdin)) {
+            return 2;
+        }
+        else if(ferror(stdin)) {
+            return 3;
+        }
     }
 }
 
@@ -48,16 +51,29 @@ int main(){
     fflush(stdout);
 
     char command[CMD_SIZE];
+    int status_command, flag=1;
 
-    while(1){
+    while(flag){
         printf(BOLD GREEN "brash" RESET "@user >> ");     
-     
-        if(read_input(command, CMD_SIZE) == 0){
-            if (strlen(command) > 0) {
-             fprintf(stderr, "brash: %s: comando não encontrado\n", command);
-            }
-        }
+        status_command=read_input(command, CMD_SIZE);
+        switch (status_command){
+            case 0:
+                if (strlen(command) > 0) {
+                    fprintf(stderr, "brash: %s: comando não encontrado\n", command);
+                }
+                break;
+            case 1:
+                fprintf(stderr, "brash: erro: Limite de caracteres estourado\n");
+                break;
+            case 2:
+                printf(CLEAR);
+                flag--;
+                break;
+            case 3:
+                fprintf(stderr, "brash: erro: Falha na leitura\n");
+                break;
+        } 
     }
-
+    
     return 0;
 }
