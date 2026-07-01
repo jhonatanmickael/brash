@@ -22,11 +22,12 @@ int main(){
         printf(BOLD GREEN "brash" RESET "@user >> ");    
 
         status_command = read_input(command, CMD_SIZE);
-        copy_command = strdup(command);
         
         switch (status_command){    
             case 0:
-                if (strlen(command) > 0) {
+            if (strlen(command) > 0) {
+                    copy_command = strdup(command);
+                    
                     i=0;
                     tokens[i] = strtok(copy_command, " \n\t");
                     while (tokens[i] != NULL && i < 63) {
