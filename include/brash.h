@@ -3,6 +3,8 @@
 #include <string.h>
 #include <limits.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #ifndef  PATH_MAX
 #define  PATH_MAX   4096
@@ -15,4 +17,6 @@
 #define  GREEN      "\033[32m"
 
 void   clear_buffer(void);
+void   parser_command(char *command, char **tokens);
+void   execute_command(char *tokens[]);
 int    read_input(char *var, int size);
