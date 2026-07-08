@@ -15,6 +15,8 @@
 #define  RESET      "\033[0m"
 #define  BOLD       "\033[1m"
 #define  GREEN      "\033[32m"
+#define  YELLOW     "\033[33m"
+#define  BLUE       "\033[34m"
 
 void   clear_buffer(void);
 void   parser_command(char *command, char **tokens);

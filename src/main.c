@@ -1,11 +1,19 @@
 /**
  * @file        main.c
  * @author      Jhonatan Mickael
- * @brief       Brash - Main loop and command execution logic
- * @date        2026-07-05
+ * @brief       Brash - Main loop and entry point of the shell
+ * @date        2026-07-08
  */
 
 #include "brash.h"
+
+/* 
+ * The main.c file acts as the primary orchestrator of the shell. 
+ * Its only responsibilities are:
+ * 1. Initializing the shell environment (e.g., clearing the screen).
+ * 2. Running the main loop to read user input.
+ * 3. Delegating the processing and execution to the dispatcher.
+ */
 
 int main(){  
     char  command[CMD_SIZE];
@@ -18,7 +26,7 @@ int main(){
     fflush(stdout);
 
     while(flag){
-        printf(BOLD GREEN "brash" RESET "@user >> ");    
+        printf(BOLD GREEN "brash" YELLOW "@user " BLUE ">> " RESET);
         status_command = read_input(command, CMD_SIZE);
         
         switch (status_command){    
