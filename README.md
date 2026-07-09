@@ -23,7 +23,10 @@ brash/
 │   └── brash.h          # Contracts, definitions, and prototypes
 ├── src/
 │   ├── main.c           # Main logic and execution loop
-│   └── io.c             # Input and output management
+│   ├── io.c             # Input and output management
+│   ├── dispatcher.c     # Command routing logic
+│   ├── executor.c       # External command execution
+│   └── builtins.c       # Built-in command implementations
 ├── Makefile             # Build automation
 ├── .gitignore           # Version control exclusions
 ├── LICENSE              # Project license
