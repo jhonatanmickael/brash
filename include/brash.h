@@ -1,8 +1,17 @@
+/**
+ * @file        brash.h
+ * @author      Jhonatan Mickael
+ * @brief       Brash - Header file containing function prototypes
+ * @date        2026-07-08
+ */
+
+#ifndef BRASH_H
+#define BRASH_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
 
@@ -18,7 +27,24 @@
 #define  YELLOW     "\033[33m"
 #define  BLUE       "\033[34m"
 
-void   clear_buffer(void);
-void   parser_command(char *command, char **tokens);
-void   execute_command(char *tokens[]);
-int    read_input(char *var, int size);
+typedef struct {
+    char *name_command;
+    void (*func)(char **);
+} builtin_command;
+
+// file: io.c
+void     clear_buffer(void);
+void     parser_command(char *command, char **tokens);
+int      read_input(char *var, int size);
+
+// file: dispatcher.c 
+int      dispatch_builtin(char **tokens);
+
+// file: executor.c
+void     execute_command(char *tokens[]);
+
+// file: builtins.c 
+void     brash_not_implemented(char **tokens);
+extern   builtin_command builtin_table[];
+
+#endif

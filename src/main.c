@@ -33,11 +33,21 @@ int main(){
             case 0:
                 if (strlen(command) > 0) {
                     copy_command = strdup(command);
-                    parser_command(copy_command, tokens);
-                    execute_command(tokens);
+                    
+                    if (copy_command != NULL) {
+                        parser_command(copy_command, tokens);
+
+                        if (dispatch_builtin(tokens)) {
+                            execute_command(tokens);
+                        }
+
+                        free(copy_command);
+                        copy_command = NULL;
+                    }
+                    else {
+                        fprintf(stderr, "brash: erro fatal: não foi possível alocar memória para o comando.\n");
+                    }
                 }
-                free(copy_command);
-                copy_command=NULL;
                 break;
             case 1:
                 fprintf(stderr, "brash: erro: Limite de caracteres estourado\n");

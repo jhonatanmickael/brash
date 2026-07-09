@@ -17,3 +17,13 @@
  * 2. Managing internal shell state (like current working directory or environment).
  * 3. Providing a clear interface for the dispatcher to execute these commands.
  */
+
+void brash_not_implemented(char **tokens) {
+    printf("Comando '%s' encontrado, mas ainda não implementado.\n", tokens[0]);
+}
+
+builtin_command builtin_table[] = {
+    {"cd", brash_not_implemented},
+    {"exit", brash_not_implemented},
+    {NULL, NULL},
+};

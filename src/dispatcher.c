@@ -19,3 +19,13 @@
  * This approach decouples the command decision logic from the actual execution 
  * mechanisms, allowing for easy expansion of shell features.
  */
+
+int dispatch_builtin(char **tokens) {
+    for(int i = 0; builtin_table[i].name_command != NULL; i++) {
+        if(!strcmp(tokens[0], builtin_table[i].name_command)) {
+            builtin_table[i].func(tokens); 
+            return 0;
+        }
+    }
+    return 1;
+}
