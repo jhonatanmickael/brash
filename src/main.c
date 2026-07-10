@@ -2,7 +2,7 @@
  * @file        main.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Main loop and entry point of the shell
- * @date        2026-07-08
+ * @date        2026-07-10
  */
 
 #include "brash.h"
@@ -15,18 +15,19 @@
  * 3. Delegating the processing and execution to the dispatcher.
  */
 
+char  *tokens[64];
+
 int main(){  
     char  command[CMD_SIZE];
     int   status_command;
     int   flag=1;
     char  *copy_command;
-    char  *tokens[64];
     
     printf(CLEAR);
     fflush(stdout);
 
     while(flag){
-        printf(BOLD GREEN "brash" YELLOW "@user " BLUE ">> " RESET);
+        print_prompt();
         status_command = read_input(command, CMD_SIZE);
         
         switch (status_command){    

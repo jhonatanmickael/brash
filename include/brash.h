@@ -2,7 +2,7 @@
  * @file        brash.h
  * @author      Jhonatan Mickael
  * @brief       Brash - Header file containing function prototypes
- * @date        2026-07-08
+ * @date        2026-07-10
  */
 
 #ifndef BRASH_H
@@ -36,6 +36,7 @@ typedef struct {
 void     clear_buffer(void);
 void     parser_command(char *command, char **tokens);
 int      read_input(char *var, int size);
+void     print_prompt(void);
 
 // file: dispatcher.c 
 int      dispatch_builtin(char **tokens);
@@ -44,7 +45,7 @@ int      dispatch_builtin(char **tokens);
 void     execute_command(char *tokens[]);
 
 // file: builtins.c 
-void     brash_not_implemented(char **tokens);
+void     brash_cd(char **tokens);
 extern   builtin_command builtin_table[];
 
 #endif

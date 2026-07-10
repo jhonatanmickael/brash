@@ -2,7 +2,7 @@
  * @file        io.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Input handling and command parsing utilities
- * @date        2026-07-08
+ * @date        2026-07-10
  */
 
 #include "brash.h"
@@ -50,4 +50,25 @@ void parser_command(char *command, char **tokens) {
         tokens[i] = strtok(NULL, " \n\t");
     }
 
+}
+
+void print_prompt(void) {
+    char *user = getenv("USER");
+    char *home = getenv("HOME");
+    char cwd[PATH_MAX];
+    
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        if (strncmp(home, cwd, strlen(home)) == 0) {
+            printf(BOLD BLUE "┌─[" GREEN "brash@%s" BLUE "]──[" YELLOW "~%s" BLUE "]\n" 
+                   BOLD BLUE "└─" GREEN "» " RESET, user, cwd+strlen(home));
+        }
+        else {
+            printf(BOLD BLUE "┌─[" GREEN "brash@%s" BLUE "]──[" YELLOW "%s" BLUE "]\n" 
+                   BOLD BLUE "└─" GREEN "» " RESET, user, cwd);
+        }
+    }
+    else {
+        perror("brash: erro de diretório");
+        printf(BOLD GREEN "brash" YELLOW "@%s " BLUE "?? " GREEN ">> " RESET, user);
+    }
 }

@@ -2,7 +2,7 @@
  * @file        builtins.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Implementation of internal commands (built-ins)
- * @date        2026-07-08
+ * @date        2026-07-10
  */
 
 #include "brash.h"
@@ -18,12 +18,17 @@
  * 3. Providing a clear interface for the dispatcher to execute these commands.
  */
 
-void brash_not_implemented(char **tokens) {
-    printf("Comando '%s' encontrado, mas ainda não implementado.\n", tokens[0]);
+void brash_cd(char **tokens) {
+    if (tokens[1] == NULL) {
+        chdir(getenv("HOME"));
+    } else {
+        if (chdir(tokens[1]) != 0) {
+            perror("brash");
+        }
+    }
 }
 
 builtin_command builtin_table[] = {
-    {"cd", brash_not_implemented},
-    {"exit", brash_not_implemented},
+    {"cd", brash_cd},
     {NULL, NULL},
 };
