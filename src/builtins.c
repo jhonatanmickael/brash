@@ -2,7 +2,7 @@
  * @file        builtins.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Implementation of internal commands (built-ins)
- * @date        2026-07-10
+ * @date        2026-07-11
  */
 
 #include "brash.h"
@@ -28,7 +28,13 @@ void brash_cd(char **tokens) {
     }
 }
 
+void brash_exit(char **tokens){
+    (void)tokens;
+    exit(0);
+}
+
 builtin_command builtin_table[] = {
     {"cd", brash_cd},
+    {"exit", brash_exit},
     {NULL, NULL},
 };
