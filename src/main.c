@@ -2,7 +2,7 @@
  * @file        main.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Main loop and entry point of the shell
- * @date        2026-07-10
+ * @date        2026-07-12
  */
 
 #include "brash.h"
@@ -15,53 +15,71 @@
  * 3. Delegating the processing and execution to the dispatcher.
  */
 
-char  *tokens[64];
+char   *home;
+char   *tokens    [64];
+char   cwd        [PATH_MAX];
+char   oldcwd     [PATH_MAX];
+ 
+int main() {  
+    char   command[CMD_SIZE];
+    char   *copy_command;
+    int    status_command;
+    int    flag = 1;
 
-int main(){  
-    char  command[CMD_SIZE];
-    int   status_command;
-    int   flag=1;
-    char  *copy_command;
-    
+    if ((home = getenv("HOME")) == NULL) {
+        perror("brash");
+        return 1;
+    }
+
+    if (getcwd(cwd, sizeof (cwd)) == NULL) {
+        perror("brash");
+        return 2;
+    }
+
     printf(CLEAR);
-    fflush(stdout);
-
-    while(flag){
+    fflush(stdout); 
+    
+    while (flag) {
         print_prompt();
         status_command = read_input(command, CMD_SIZE);
-        
-        switch (status_command){    
+    
+        switch (status_command) {    
             case 0:
                 if (strlen(command) > 0) {
                     copy_command = strdup(command);
-                    
+                   
                     if (copy_command != NULL) {
                         parser_command(copy_command, tokens);
-
-                        if (dispatch_builtin(tokens)) {
-                            execute_command(tokens);
+                   
+                        if (dispatch_builtin (tokens)) {
+                            execute_command (tokens);
                         }
-
-                        free(copy_command);
-                        copy_command = NULL;
+                        else {
+                            free (copy_command);
+                            copy_command = NULL;
+                        }
                     }
                     else {
                         fprintf(stderr, "brash: erro fatal: não foi possível alocar memória para o comando.\n");
                     }
                 }
                 break;
+    
             case 1:
-                fprintf(stderr, "brash: erro: Limite de caracteres estourado\n");
+                fprintf (stderr, "brash: erro: Limite de caracteres estourado\n");
                 break;
+    
             case 2:
-                printf(CLEAR);
+                printf (CLEAR);
                 flag--;
                 break;
+    
             case 3:
-                fprintf(stderr, "brash: erro: Falha na leitura\n");
+                fprintf (stderr, "brash: erro: Falha na leitura\n");
                 break;
+    
             default:
-                fprintf(stderr, "brash: erro: estado de entrada inesperado (%d)\n", status_command);
+                fprintf (stderr, "brash: erro: estado de entrada inesperado (%d)\n", status_command);
                 break;
         } 
     }

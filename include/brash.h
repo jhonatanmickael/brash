@@ -2,7 +2,7 @@
  * @file        brash.h
  * @author      Jhonatan Mickael
  * @brief       Brash - Header file containing function prototypes
- * @date        2026-07-11
+ * @date        2026-07-12
  */
 
 #ifndef BRASH_H
@@ -48,5 +48,11 @@ void     execute_command(char *tokens[]);
 void     brash_cd(char **tokens);
 void     brash_exit(char **tokens);
 extern   builtin_command builtin_table[];
+
+// global variables
+extern char  *tokens[64];
+extern char  *home;
+extern char  cwd[PATH_MAX];
+extern char  oldcwd[PATH_MAX];
 
 #endif

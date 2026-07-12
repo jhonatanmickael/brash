@@ -2,7 +2,7 @@
  * @file        builtins.c
  * @author      Jhonatan Mickael
  * @brief       Brash - Implementation of internal commands (built-ins)
- * @date        2026-07-11
+ * @date        2026-07-12
  */
 
 #include "brash.h"
@@ -19,13 +19,39 @@
  */
 
 void brash_cd(char **tokens) {
-    if (tokens[1] == NULL) {
-        chdir(getenv("HOME"));
-    } else {
-        if (chdir(tokens[1]) != 0) {
-            perror("brash");
+    char    *target = NULL;
+    char    full_path[PATH_MAX];
+
+    if(tokens[1] == NULL || (strcmp(tokens[1], "~") == 0)) {
+        target = home;
+    }
+    else if(tokens[1][0] == '~' && tokens[1][1] == '/' ) {
+        strcpy(full_path, home);
+        strcat(full_path, tokens[1]+1);
+        target = full_path;
+    }
+    else if((strcmp(tokens[1], "-")) == 0) {
+        if (oldcwd[0] != '\0') {
+          target = oldcwd;
         }
     }
+    else {
+        target = tokens[1];
+    }
+
+    if(target == NULL) {
+        fprintf(stderr, "brash: erro: destino inválido\n");
+        return;
+    }
+    else if(chdir(target) != 0)  {
+        perror("brash");
+    }
+    else {
+        strcpy(oldcwd, cwd);
+        getcwd(cwd, sizeof(cwd));
+    }
+
+    return;
 }
 
 void brash_exit(char **tokens){
