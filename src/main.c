@@ -31,6 +31,8 @@ int main() {
         return 1;
     }
 
+    chdir(home);
+
     if (getcwd(cwd, sizeof (cwd)) == NULL) {
         perror("brash");
         return 2;
@@ -54,14 +56,13 @@ int main() {
                         if (dispatch_builtin (tokens)) {
                             execute_command (tokens);
                         }
-                        else {
-                            free (copy_command);
-                            copy_command = NULL;
-                        }
                     }
                     else {
                         fprintf(stderr, "brash: erro fatal: não foi possível alocar memória para o comando.\n");
                     }
+                    
+                    free (copy_command);
+                    copy_command = NULL;
                 }
                 break;
     

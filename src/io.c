@@ -54,7 +54,6 @@ void parser_command(char *command, char **tokens) {
 
 void print_prompt(void) {
     char *user = getenv("USER");
-    char *home = getenv("HOME");
     char cwd[PATH_MAX];
     
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
